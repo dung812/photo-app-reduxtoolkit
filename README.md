@@ -1,70 +1,481 @@
-# Getting Started with Create React App
+# Mini Project: Photo App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Setup environment 
 
-## Available Scripts
+Github Project: https://github.com/paulnguyen-mn/redux-photo-app
 
-In the project directory, you can run:
+### 1. Setup ReactJS App via Create React App
 
-### `npm start`
+> Link: https://create-react-app.dev/docs/getting-started/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. Add SCSS support
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```js# Mini Project: Photo App
 
-### `npm test`
+## Setup environment 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Github Project: https://github.com/paulnguyen-mn/redux-photo-app
 
-### `npm run build`
+### 1. Setup ReactJS App via Create React App
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> Link: https://create-react-app.dev/docs/getting-started/
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. Add SCSS support
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+npm i --save-dev node-sass
+```
 
-### `npm run eject`
+### 3. Add react router 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm i --save react-router-dom
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 4. Add UI lib
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm i --save reactstrap
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Tổ chức folder
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+src
+|__ assets
+|  |__ images
+|  |__ styles (global styles) 
+|
+|__ components (shared components)
+|
+|__ features
+  |__ Photo
+    |__ components
+    |  |__ PhotoList
+    |  |__ PhotoCard
+    |  |__ PhotoForm
+    |
+    |__ pages
+    |  |__ MainPage
+    |  |__ AddEditPage
+    |__ photoSlice.js
+    |__ index.js
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Tổ chức routing
 
-### Code Splitting
+- Sử dụng kĩ thuật lazy load components.
+- Load theo features.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```js
+// App.js
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/photos" component={Photo} />
+        <Route path="/user" component={User} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
+```
 
-### Analyzing the Bundle Size
+## Custom Field 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Cầu nối giữa UI control và Formik.
+- UI control là một controlled component với props: 
+  - name: tên xác định control
+  - value: giá trị của control
+  - onChange: trigger hàm này với giá trị mới khi có thay đổi
+  - onBlur: xác định khi nào thì control này bị touched
 
-### Making a Progressive Web App
+```js
+function InputField(props) {
+  const {
+    field,
+    type, label, placeholder, disabled,
+  } = props;
+  const { name } = field;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  return (
+    <FormGroup>
+      {label && <Label for={name}>{label}</Label>}
 
-### Advanced Configuration
+      <Input
+        id={name}
+        {...field}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+        type={type}
+        disabled={disabled}
+        placeholder={placeholder}
+      />
+    </FormGroup>
+  );
+}
+```
 
-### Deployment
+## Random Photo control
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+RandomPhoto
+Props
+  - name
+  - imageUrl 
+  - onImageUrlChange 
+  - onRandomButtonBlur
 
-### `npm run build` fails to minify
+RandomPhotoField
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Formik
+
+Yup
+npm i --save-dev node-sass
+```
+
+### 3. Add react router 
+
+```
+npm i --save react-router-dom
+```
+
+### 4. Add UI lib
+
+```
+npm i --save reactstrap
+```
+
+
+## Tổ chức folder
+
+```
+src
+|__ assets
+|  |__ images
+|  |__ styles (global styles) 
+|
+|__ components (shared components)
+|
+|__ features
+  |__ Photo
+    |__ components
+    |  |__ PhotoList
+    |  |__ PhotoCard
+    |  |__ PhotoForm
+    |
+    |__ pages
+    |  |__ MainPage
+    |  |__ AddEditPage
+    |__ photoSlice.js
+    |__ index.js
+```
+
+## Tổ chức routing
+
+- Sử dụng kĩ thuật lazy load components.
+- Load theo features.
+
+```js
+// App.js
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/photos" component={Photo} />
+        <Route path="/user" component={User} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
+```
+
+## Custom Field 
+
+- Cầu nối giữa UI control và Formik.
+- UI control là một controlled component với props: 
+  - name: tên xác định control
+  - value: giá trị của control
+  - onChange: trigger hàm này với giá trị mới khi có thay đổi
+  - onBlur: xác định khi nào thì control này bị touched
+
+```js
+function InputField(props) {
+  const {
+    field,
+    type, label, placeholder, disabled,
+  } = props;
+  const { name } = field;
+
+  return (
+    <FormGroup>
+      {label && <Label for={name}>{label}</Label>}
+
+      <Input
+        id={name}
+        {...field}
+
+        type={type}
+        disabled={disabled}
+        placeholder={placeholder}
+      />
+    </FormGroup>
+  );
+}
+```
+
+## Random Photo control
+
+RandomPhoto
+Props
+  - name
+  - imageUrl 
+  - onImageUrlChange 
+  - onRandomButtonBlur
+
+RandomPhotoField
+
+Formik
+
+Yup# Mini Project: Photo App
+
+## Setup environment 
+
+Github Project: https://github.com/paulnguyen-mn/redux-photo-app
+
+### 1. Setup ReactJS App via Create React App
+
+> Link: https://create-react-app.dev/docs/getting-started/
+
+### 2. Add SCSS support
+
+```js# Mini Project: Photo App
+
+## Setup environment 
+
+Github Project: https://github.com/paulnguyen-mn/redux-photo-app
+
+### 1. Setup ReactJS App via Create React App
+
+> Link: https://create-react-app.dev/docs/getting-started/
+
+### 2. Add SCSS support
+
+```js
+npm i --save-dev node-sass
+```
+
+### 3. Add react router 
+
+```
+npm i --save react-router-dom
+```
+
+### 4. Add UI lib
+
+```
+npm i --save reactstrap
+```
+
+
+## Tổ chức folder
+
+```
+src
+|__ assets
+|  |__ images
+|  |__ styles (global styles) 
+|
+|__ components (shared components)
+|
+|__ features
+  |__ Photo
+    |__ components
+    |  |__ PhotoList
+    |  |__ PhotoCard
+    |  |__ PhotoForm
+    |
+    |__ pages
+    |  |__ MainPage
+    |  |__ AddEditPage
+    |__ photoSlice.js
+    |__ index.js
+```
+
+## Tổ chức routing
+
+- Sử dụng kĩ thuật lazy load components.
+- Load theo features.
+
+```js
+// App.js
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/photos" component={Photo} />
+        <Route path="/user" component={User} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
+```
+
+## Custom Field 
+
+- Cầu nối giữa UI control và Formik.
+- UI control là một controlled component với props: 
+  - name: tên xác định control
+  - value: giá trị của control
+  - onChange: trigger hàm này với giá trị mới khi có thay đổi
+  - onBlur: xác định khi nào thì control này bị touched
+
+```js
+function InputField(props) {
+  const {
+    field,
+    type, label, placeholder, disabled,
+  } = props;
+  const { name } = field;
+
+  return (
+    <FormGroup>
+      {label && <Label for={name}>{label}</Label>}
+
+      <Input
+        id={name}
+        {...field}
+
+        type={type}
+        disabled={disabled}
+        placeholder={placeholder}
+      />
+    </FormGroup>
+  );
+}
+```
+
+## Random Photo control
+
+RandomPhoto
+Props
+  - name
+  - imageUrl 
+  - onImageUrlChange 
+  - onRandomButtonBlur
+
+RandomPhotoField
+
+Formik
+
+Yup
+npm i --save-dev node-sass
+```
+
+### 3. Add react router 
+
+```
+npm i --save react-router-dom
+```
+
+### 4. Add UI lib
+
+```
+npm i --save reactstrap
+```
+
+
+## Tổ chức folder
+
+```
+src
+|__ assets
+|  |__ images
+|  |__ styles (global styles) 
+|
+|__ components (shared components)
+|
+|__ features
+  |__ Photo
+    |__ components
+    |  |__ PhotoList
+    |  |__ PhotoCard
+    |  |__ PhotoForm
+    |
+    |__ pages
+    |  |__ MainPage
+    |  |__ AddEditPage
+    |__ photoSlice.js
+    |__ index.js
+```
+
+## Tổ chức routing
+
+- Sử dụng kĩ thuật lazy load components.
+- Load theo features.
+
+```js
+// App.js
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/photos" component={Photo} />
+        <Route path="/user" component={User} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
+```
+
+## Custom Field 
+
+- Cầu nối giữa UI control và Formik.
+- UI control là một controlled component với props: 
+  - name: tên xác định control
+  - value: giá trị của control
+  - onChange: trigger hàm này với giá trị mới khi có thay đổi
+  - onBlur: xác định khi nào thì control này bị touched
+
+```js
+function InputField(props) {
+  const {
+    field,
+    type, label, placeholder, disabled,
+  } = props;
+  const { name } = field;
+
+  return (
+    <FormGroup>
+      {label && <Label for={name}>{label}</Label>}
+
+      <Input
+        id={name}
+        {...field}
+
+        type={type}
+        disabled={disabled}
+        placeholder={placeholder}
+      />
+    </FormGroup>
+  );
+}
+```
+
+## Random Photo control
+
+RandomPhoto
+Props
+  - name
+  - imageUrl 
+  - onImageUrlChange 
+  - onRandomButtonBlur
+
+RandomPhotoField
+
+Formik
+
+Yup
